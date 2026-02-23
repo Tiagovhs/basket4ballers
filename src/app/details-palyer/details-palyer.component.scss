@@ -1,0 +1,117 @@
+
+.player{
+    background-color: rgba(8, 8, 8, 0.99);
+
+}
+.pres {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    justify-content: space-around;
+    grid-template-areas:"gauche milieu droit ." ;
+    background-color: rgba(8, 8, 8, 0.99);
+    position: relative;
+    overflow: hidden;
+    height: 300px;
+    border-bottom: 1px solid white;
+}
+
+.details{
+    display: grid;
+    grid-template-columns: auto auto auto;
+    justify-content: space-around;
+    background-color: rgba(8, 8, 8, 0.99);
+    position: relative;
+    overflow: hidden;
+    height: 100px;
+}
+.details>p{
+    font-size: xx-large;
+}
+
+
+
+
+* {
+    font-family: "Poppins", 'Arial Narrow Bold', sans-serif;
+    color: aliceblue;
+}
+
+.backButton {
+    background-color: rgb(0, 0, 0);
+    height: 35px;
+}
+
+.backButton>img {
+    height: 35px;
+}
+
+.backButtonDiv {
+    margin: 15px;
+    text-align: center;
+}
+
+.backButton:hover {
+    background-color: rgb(172, 18, 18);
+}
+
+
+.logoFranchise {
+    height: 550px;
+    position: absolute;
+    top: -7em;
+    left: 2em;
+    opacity: 10%;
+    z-index: 1;
+}
+
+.face {
+    position: relative;
+    height: 330px;
+    left:10em;
+    z-index: 2;
+}
+
+.names{
+    position: relative;
+    z-index: 3;
+    font-weight: bold;
+    font-size: xx-large;
+    margin-bottom: 0px;
+}
+
+
+.team{
+    position: relative;
+    z-index: 3;
+    text-align: end;
+}
+.numero{
+
+    position: relative;
+    z-index: 3;
+    font-weight: bold;
+    font-size: 90px;
+
+}
+
+.post{
+    position: relative;
+    z-index: 3;
+    font-size: large;
+    font-weight: bold;
+}
+
+
+.milieu{
+    grid-area: milieu;
+}
+
+.gauche{
+    grid-area: gauche;
+}
+
+.droit{
+    grid-area: droit;
+}
+
+

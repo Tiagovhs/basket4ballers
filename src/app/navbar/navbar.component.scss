@@ -1,0 +1,37 @@
+.navbar {
+    background-color: rgb(8, 8, 8);
+    height: 100px;
+    display: grid;
+    grid-template-columns: repeat(6, auto);
+    align-items: center;
+    justify-content: space-around;
+    grid-template-areas: "i . t p  s b";
+}
+
+.players{
+    grid-area: p;
+
+}
+
+.icon{
+    grid-area: i;
+}
+
+.top{
+    grid-area: t;
+}
+
+.brands{
+    grid-area: b;
+}
+
+.sneakers{
+    grid-area: s;
+}
+
+
+
+
+* {
+    font-family: "Poppins", 'Arial Narrow Bold', sans-serif;
+}

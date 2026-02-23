@@ -1,0 +1,25 @@
+<div class="player">
+<div *ngIf="currentPlayer" class="pres">
+    <div class="gauche">
+        <img class="logoFranchise"  [src]="currentPlayer.team.id" [alt]="currentPlayer.team">
+        <img class="face" [src]="currentPlayer.img" [alt]="currentPlayer.last_name+' photo'">
+    </div>
+    <div class="milieu">
+        <p class="names">{{ currentPlayer.last_name }} {{ currentPlayer.first_name }}</p>
+        <p class="team">{{ currentPlayer.team.name }}</p>
+        <p class="poste">{{ currentPlayer.poste }}</p>
+    </div>
+    <div class="droit">
+        <p class="numero">#{{ currentPlayer.number }}</p>
+
+    </div>     
+</div>
+<div class="details">
+    <p>30 ppg</p>
+    <p>44%</p>
+    <p>10rb</p>
+</div>
+</div>
+<div class="backButtonDiv">
+<button  class="backButton" (click)="returnToPlayers()" ><img src="assets/images/retour.png" ></button>
+</div>

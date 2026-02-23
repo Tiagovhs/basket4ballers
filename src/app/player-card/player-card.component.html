@@ -1,0 +1,18 @@
+<div class="wrapper" appNonSelectable>
+    <div *ngFor="let joueur of data_source" 
+         class="card" 
+         [ngClass]="{'hover': hoveredCard === joueur}"
+         (click)="goToPlayer(joueur)"
+         (mouseenter)="setHoveredCard(joueur)" 
+         (mouseleave)="resetHoveredCard()">
+      <div class="container">
+        <p class="foreground" style="font-weight:800;"  >{{ joueur.last_name }} {{ joueur.first_name }}</p>
+        <p style="text-align: end; font-weight: 600;" class="foreground">{{ joueur.poste }}</p>
+        <span [ngStyle]="{'color': hoveredCard === joueur ? joueur.team.color : 'rgb(64, 63, 63)'}" class="background">{{ joueur.number }}</span>
+        <img class="logoFranchise" [src]="joueur.team.id" [alt]="joueur.team">
+        <img class="face" [src]="joueur.img" [alt]="joueur.last_name+' photo'">
+      </div>
+    </div>
+  </div>
+
+ 
