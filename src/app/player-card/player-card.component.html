@@ -1,18 +1,64 @@
-<div class="wrapper" appNonSelectable>
-    <div *ngFor="let joueur of data_source"
+<div class="page">
+
+  <!-- FILTRES -->
+  <div class="filters-bar">
+    <input
+      class="search-input"
+      type="text"
+      placeholder="Rechercher un joueur..."
+      [value]="searchQuery"
+      (input)="onSearch($event)" />
+
+    <select class="filter-select" (change)="onTeamFilter($event)">
+      <option value="">Toutes les équipes</option>
+      <option *ngFor="let team of teams" [value]="team">{{ team }}</option>
+    </select>
+
+    <select class="filter-select" (change)="onPosteFilter($event)">
+      <option value="">Tous les postes</option>
+      <option *ngFor="let poste of postes" [value]="poste">{{ poste }}</option>
+    </select>
+
+    <button class="clear-btn" (click)="clearFilters()" *ngIf="searchQuery || selectedTeam || selectedPoste">
+      Effacer
+    </button>
+
+    <span class="results-count">{{ filteredPlayers.length }} joueur{{ filteredPlayers.length > 1 ? 's' : '' }}</span>
+  </div>
+
+  <!-- CARDS -->
+  <div class="wrapper" appNonSelectable>
+    <div *ngFor="let joueur of paginatedPlayers"
          class="card"
          [ngClass]="{'hover': hoveredCard === joueur}"
          (click)="goToPlayer(joueur)"
          (mouseenter)="setHoveredCard(joueur)"
          (mouseleave)="resetHoveredCard()">
       <div class="container">
-        <p class="foreground" style="font-weight:800;"  >{{ joueur.last_name }} {{ joueur.first_name }}</p>
+        <p class="foreground" style="font-weight:800;">{{ joueur.last_name }} {{ joueur.first_name }}</p>
         <p style="text-align: end; font-weight: 600;" class="foreground">{{ joueur.poste }}</p>
         <span [ngStyle]="{'color': hoveredCard === joueur ? joueur.team.color : 'rgb(64, 63, 63)'}" class="background">{{ joueur.number }}</span>
-        <img class="logoFranchise" [src]="joueur.team.id" [alt]="joueur.team">
+        <img class="logoFranchise" [src]="joueur.team.id" [alt]="joueur.team.name">
         <img class="face" [src]="joueur.img" [alt]="joueur.last_name+' photo'">
       </div>
     </div>
+
+    <div class="no-results" *ngIf="filteredPlayers.length === 0">
+      <p>Aucun joueur trouvé.</p>
+    </div>
   </div>
 
- 
+  <!-- PAGINATION -->
+  <div class="pagination" *ngIf="totalPages > 1">
+    <button class="page-btn" (click)="setPage(currentPage - 1)" [disabled]="currentPage === 1">&#8249;</button>
+    <button
+      class="page-btn"
+      *ngFor="let page of pageNumbers"
+      [class.active]="page === currentPage"
+      (click)="setPage(page)">
+      {{ page }}
+    </button>
+    <button class="page-btn" (click)="setPage(currentPage + 1)" [disabled]="currentPage === totalPages">&#8250;</button>
+  </div>
+
+</div>

@@ -1,7 +1,112 @@
+.page {
+  background-color: rgb(8, 8, 8);
+  min-height: 100vh;
+}
+
+/* ── FILTRES ── */
+.filters-bar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 16px 20px;
+  background-color: rgb(14, 14, 14);
+  border-bottom: 1px solid rgb(30, 30, 30);
+}
+
+.search-input {
+  background-color: rgb(28, 28, 28);
+  border: 1px solid rgb(50, 50, 50);
+  border-radius: 8px;
+  color: aliceblue;
+  font-family: 'Poppins', sans-serif;
+  font-size: 13px;
+  padding: 8px 14px;
+  outline: none;
+  flex: 1;
+  min-width: 200px;
+
+  &::placeholder { color: rgb(100, 100, 100); }
+  &:focus { border-color: rgb(100, 100, 100); }
+}
+
+.filter-select {
+  background-color: rgb(28, 28, 28);
+  border: 1px solid rgb(50, 50, 50);
+  border-radius: 8px;
+  color: aliceblue;
+  font-family: 'Poppins', sans-serif;
+  font-size: 13px;
+  padding: 8px 14px;
+  outline: none;
+  cursor: pointer;
+
+  option { background-color: rgb(28, 28, 28); }
+  &:focus { border-color: rgb(100, 100, 100); }
+}
+
+.clear-btn {
+  background-color: rgb(172, 18, 18);
+  border: none;
+  border-radius: 8px;
+  color: aliceblue;
+  font-family: 'Poppins', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 8px 14px;
+  cursor: pointer;
+
+  &:hover { background-color: rgb(200, 30, 30); }
+}
+
+.results-count {
+  font-family: 'Poppins', sans-serif;
+  font-size: 12px;
+  color: rgb(120, 120, 120);
+  margin-left: auto;
+}
+
+/* ── PAGINATION ── */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  padding: 24px 20px;
+}
+
+.page-btn {
+  background-color: rgb(20, 20, 20);
+  border: 1px solid rgb(40, 40, 40);
+  border-radius: 8px;
+  color: aliceblue;
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+
+  &:hover:not(:disabled) { background-color: rgb(40, 40, 40); }
+  &.active { background-color: aliceblue; color: rgb(8, 8, 8); }
+  &:disabled { opacity: 0.3; cursor: default; }
+}
+
+.no-results {
+  width: 100%;
+  text-align: center;
+  padding: 48px;
+  font-family: 'Poppins', sans-serif;
+  color: rgb(100, 100, 100);
+  font-size: 16px;
+}
+
+/* ── CARDS ── */
 .card {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.63);
   border-radius: 10px;
-  transition: none;
+  transition: 0.3s;
   min-width: 239px;
   text-align: center;
   background-color: rgb(255, 255, 255);
@@ -15,8 +120,6 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  background-color: rgb(8, 8, 8);
-  min-height: 100vh;
   padding: 10px;
 }
 

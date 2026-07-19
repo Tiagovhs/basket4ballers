@@ -20,10 +20,36 @@ const miamiHeat = new Team('Miami Heat', '#98002E',"https://cdn.nba.com/logos/nb
 const minnesotaTimberwolves = new Team('Minnesota Timberwolves', '#0C2340',"https://cdn.nba.com/logos/nba/1610612750/global/L/logo.svg");
 const oklahomaCityThunder = new Team('Oklahoma City Thunder', '#007AC1',"https://cdn.nba.com/logos/nba/1610612760/global/L/logo.svg");
 const torontoRaptors = new Team('Toronto Raptors', '#CE1141',"https://cdn.nba.com/logos/nba/1610612761/global/L/logo.svg");
+const indianaPacers = new Team('Indiana Pacers', '#002D62',"https://cdn.nba.com/logos/nba/1610612754/global/L/logo.svg");
+const sanAntonioSpurs = new Team('San Antonio Spurs', '#C4CED4',"https://cdn.nba.com/logos/nba/1610612759/global/L/logo.svg");
+const detroitPistons = new Team('Detroit Pistons', '#C8102E',"https://cdn.nba.com/logos/nba/1610612765/global/L/logo.svg");
+const orlandoMagic = new Team('Orlando Magic', '#0077C0',"https://cdn.nba.com/logos/nba/1610612753/global/L/logo.svg");
+const newYorkKnicks = new Team('New York Knicks', '#F58426',"https://cdn.nba.com/logos/nba/1610612752/global/L/logo.svg");
 
-
-export const TEAMS:Team[]=[losAngelesLakers,memphisGrizzlies,goldenStateWarriors,milwaukeeBucks,phoenixSuns,portlandTrailBlazers,philadelphia76ers,denverNuggets,
-    bostonCeltics,clevelandCavaliers,atlantaHawks,newOrleansPelicans,dallasMavericks,losAngelesClippers,miamiHeat,minnesotaTimberwolves,oklahomaCityThunder,torontoRaptors
+export const TEAMS:Team[]=[
+    losAngelesLakers,      // 0
+    memphisGrizzlies,      // 1
+    goldenStateWarriors,   // 2
+    milwaukeeBucks,        // 3
+    phoenixSuns,           // 4
+    portlandTrailBlazers,  // 5
+    philadelphia76ers,     // 6
+    denverNuggets,         // 7
+    bostonCeltics,         // 8
+    clevelandCavaliers,    // 9
+    atlantaHawks,          // 10
+    newOrleansPelicans,    // 11
+    dallasMavericks,       // 12
+    losAngelesClippers,    // 13
+    miamiHeat,             // 14
+    minnesotaTimberwolves, // 15
+    oklahomaCityThunder,   // 16
+    torontoRaptors,        // 17
+    indianaPacers,         // 18
+    sanAntonioSpurs,       // 19
+    detroitPistons,        // 20
+    orlandoMagic,          // 21
+    newYorkKnicks,         // 22
 ]
 
 
