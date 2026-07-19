@@ -1,9 +1,9 @@
 <div class="wrapper" appNonSelectable>
-    <div *ngFor="let joueur of data_source" 
-         class="card" 
+    <div *ngFor="let joueur of data_source"
+         class="card"
          [ngClass]="{'hover': hoveredCard === joueur}"
          (click)="goToPlayer(joueur)"
-         (mouseenter)="setHoveredCard(joueur)" 
+         (mouseenter)="setHoveredCard(joueur)"
          (mouseleave)="resetHoveredCard()">
       <div class="container">
         <p class="foreground" style="font-weight:800;"  >{{ joueur.last_name }} {{ joueur.first_name }}</p>

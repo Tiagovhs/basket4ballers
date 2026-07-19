@@ -115,3 +115,112 @@
 }
 
 
+@media (max-width: 768px) {
+    .pres {
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas:
+            "gauche droit"
+            "milieu milieu";
+        height: auto;
+        padding-bottom: 16px;
+    }
+
+    .gauche {
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+        position: relative;
+    }
+
+    .logoFranchise {
+        height: 280px;
+        top: -2em;
+        left: 0;
+    }
+
+    .face {
+        height: 200px;
+        left: 0;
+    }
+
+    .milieu {
+        padding: 12px 16px;
+        text-align: center;
+    }
+
+    .names {
+        font-size: large;
+    }
+
+    .team {
+        text-align: center;
+    }
+
+    .droit {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .numero {
+        font-size: 56px;
+    }
+
+    .details {
+        height: auto;
+        padding: 12px 0;
+    }
+
+    .details > p {
+        font-size: large;
+    }
+}
+
+@media (max-width: 480px) {
+    .pres {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "milieu"
+            "gauche"
+            "droit";
+        text-align: center;
+    }
+
+    .milieu {
+        order: -1;
+        padding: 16px 12px 8px;
+    }
+
+    .team {
+        text-align: center;
+    }
+
+    .gauche {
+        justify-content: center;
+    }
+
+    .face {
+        height: 180px;
+        left: 0;
+    }
+
+    .logoFranchise {
+        height: 220px;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .droit {
+        justify-content: center;
+    }
+
+    .numero {
+        font-size: 48px;
+    }
+
+    .details > p {
+        font-size: medium;
+        text-align: center;
+    }
+}
