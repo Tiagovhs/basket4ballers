@@ -1,0 +1,46 @@
+<div class="page" *ngIf="brand">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="logo-wrapper">
+      <img [src]="brand.logo" [alt]="brand.name" />
+    </div>
+    <h1 class="brand-name">{{ brand.name }}</h1>
+    <p class="brand-tagline">{{ brand.description }}</p>
+  </div>
+
+  <!-- WIKI -->
+  <div class="wiki-section">
+    <h2 class="section-title">À propos</h2>
+    <p class="wiki-text">{{ brand.wikiText }}</p>
+  </div>
+
+  <!-- SNEAKERS -->
+  <div class="sneakers-section" *ngIf="brandSneakers.length > 0">
+    <h2 class="section-title">Nos modèles</h2>
+    <div class="sneakers-grid">
+      <div class="sneaker-card" *ngFor="let sneaker of brandSneakers">
+        <div class="sneaker-img-wrapper">
+          <img [src]="sneaker.img" [alt]="sneaker.name" />
+        </div>
+        <div class="sneaker-info">
+          <p class="sneaker-name">{{ sneaker.name }}</p>
+          <p class="sneaker-colorway">{{ sneaker.colorway }}</p>
+          <p class="sneaker-price">{{ sneaker.price }} €</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="no-sneakers" *ngIf="brandSneakers.length === 0">
+    <p>Aucun modèle disponible pour cette marque.</p>
+  </div>
+
+  <!-- BACK -->
+  <div class="back-section">
+    <button class="backButton" (click)="goBack()">
+      <img src="assets/images/retour.png" />
+    </button>
+  </div>
+
+</div>

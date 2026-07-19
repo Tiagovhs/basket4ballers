@@ -1,0 +1,16 @@
+<div class="page">
+  <h1 class="section-title">Sneakers</h1>
+  <div class="grid">
+    <div *ngFor="let sneaker of sneakers" class="card">
+      <div class="img-wrapper">
+        <img [src]="sneaker.img" [alt]="sneaker.name" />
+      </div>
+      <div class="info">
+        <span class="brand">{{ sneaker.brand }}</span>
+        <h3 class="name">{{ sneaker.name }}</h3>
+        <p class="colorway">{{ sneaker.colorway }}</p>
+        <p class="price">{{ sneaker.price }} €</p>
+      </div>
+    </div>
+  </div>
+</div>

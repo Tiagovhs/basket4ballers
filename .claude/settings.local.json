@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "WebFetch(domain:stockx.com)",
+      "WebFetch(domain:sneakernews.com)",
+      "WebFetch(domain:hypebeast.com)",
+      "WebFetch(domain:www.stickpng.com)",
+      "WebFetch(domain:commons.wikimedia.org)"
+    ]
+  }
+}

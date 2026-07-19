@@ -1,0 +1,18 @@
+<div class="page">
+  <h1 class="section-title">Top 10 Joueurs</h1>
+  <div class="list">
+    <div *ngFor="let player of topPlayers; let i = index" class="row">
+      <span class="rank" [class.gold]="i === 0" [class.silver]="i === 1" [class.bronze]="i === 2">
+        #{{ i + 1 }}
+      </span>
+      <img class="avatar" [src]="player.img" [alt]="player.last_name" />
+      <div class="player-info">
+        <span class="player-name">{{ player.last_name }} {{ player.first_name }}</span>
+        <span class="player-details">{{ player.poste }} · {{ player.team.name }}</span>
+      </div>
+      <div class="number-badge" [style.color]="player.team.color">
+        #{{ player.number }}
+      </div>
+    </div>
+  </div>
+</div>

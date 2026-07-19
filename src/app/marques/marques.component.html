@@ -1,0 +1,14 @@
+<div class="page">
+  <h1 class="section-title">Marques</h1>
+  <div class="grid">
+    <div *ngFor="let brand of brands" class="card" (click)="goToBrand(brand)">
+      <div class="logo-wrapper">
+        <img [src]="brand.logo" [alt]="brand.name" />
+      </div>
+      <div class="info">
+        <h3 class="brand-name">{{ brand.name }}</h3>
+        <p class="description">{{ brand.description }}</p>
+      </div>
+    </div>
+  </div>
+</div>

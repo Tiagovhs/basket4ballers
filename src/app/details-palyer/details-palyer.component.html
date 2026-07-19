@@ -1,25 +1,88 @@
-<div class="player">
-<div *ngIf="currentPlayer" class="pres">
-    <div class="gauche">
-        <img class="logoFranchise"  [src]="currentPlayer.team.id" [alt]="currentPlayer.team">
-        <img class="face" [src]="currentPlayer.img" [alt]="currentPlayer.last_name+' photo'">
-    </div>
-    <div class="milieu">
-        <p class="names">{{ currentPlayer.last_name }} {{ currentPlayer.first_name }}</p>
-        <p class="team">{{ currentPlayer.team.name }}</p>
-        <p class="poste">{{ currentPlayer.poste }}</p>
-    </div>
-    <div class="droit">
-        <p class="numero">#{{ currentPlayer.number }}</p>
+<div class="page" *ngIf="currentPlayer">
 
-    </div>     
-</div>
-<div class="details">
-    <p>30 ppg</p>
-    <p>44%</p>
-    <p>10rb</p>
-</div>
-</div>
-<div class="backButtonDiv">
-<button  class="backButton" (click)="returnToPlayers()" ><img src="assets/images/retour.png" ></button>
+  <!-- HERO -->
+  <div class="hero" [style.border-bottom-color]="currentPlayer.team.color">
+    <img class="logo-bg" [src]="currentPlayer.team.id" [alt]="currentPlayer.team.name" />
+    <img class="face" [src]="currentPlayer.img" [alt]="currentPlayer.last_name" />
+    <div class="hero-info">
+      <p class="name">{{ currentPlayer.last_name }} <span>{{ currentPlayer.first_name }}</span></p>
+      <p class="team-name">{{ currentPlayer.team.name }}</p>
+      <p class="poste">{{ currentPlayer.poste }}</p>
+      <p class="numero" [style.color]="currentPlayer.team.color">#{{ currentPlayer.number }}</p>
+    </div>
+  </div>
+
+  <!-- QUOTE -->
+  <div class="quote-section">
+    <p class="quote">"{{ currentPlayer.quote }}"</p>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats-section">
+    <div class="stat-box">
+      <span class="stat-value">{{ currentPlayer.stats.ppg }}</span>
+      <span class="stat-label">PPG</span>
+    </div>
+    <div class="stat-box">
+      <span class="stat-value">{{ currentPlayer.stats.rpg }}</span>
+      <span class="stat-label">RPG</span>
+    </div>
+    <div class="stat-box">
+      <span class="stat-value">{{ currentPlayer.stats.apg }}</span>
+      <span class="stat-label">APG</span>
+    </div>
+    <div class="stat-box">
+      <span class="stat-value">{{ currentPlayer.stats.fgp }}%</span>
+      <span class="stat-label">FG%</span>
+    </div>
+  </div>
+
+  <!-- WIKI -->
+  <div class="wiki-section">
+    <h2 class="section-title">Biographie</h2>
+    <div class="wiki-grid">
+      <div class="wiki-item">
+        <span class="wiki-label">Draft</span>
+        <span class="wiki-value">{{ currentPlayer.draftYear }} — Choix n°{{ currentPlayer.draftPick }}</span>
+      </div>
+      <div class="wiki-item">
+        <span class="wiki-label">Poste</span>
+        <span class="wiki-value">{{ currentPlayer.poste }}</span>
+      </div>
+      <div class="wiki-item">
+        <span class="wiki-label">Âge</span>
+        <span class="wiki-value">{{ currentPlayer.age }} ans</span>
+      </div>
+      <div class="wiki-item">
+        <span class="wiki-label">Équipes</span>
+        <span class="wiki-value">{{ currentPlayer.allTeams.join(' → ') }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SNEAKERS -->
+  <div class="sneakers-section" *ngIf="playerSneakers.length > 0">
+    <h2 class="section-title">Ses paires</h2>
+    <div class="sneakers-row">
+      <div class="sneaker-card" *ngFor="let sneaker of playerSneakers">
+        <div class="sneaker-img-wrapper">
+          <img [src]="sneaker.img" [alt]="sneaker.name" />
+        </div>
+        <div class="sneaker-info">
+          <span class="sneaker-brand">{{ sneaker.brand }}</span>
+          <p class="sneaker-name">{{ sneaker.name }}</p>
+          <p class="sneaker-colorway">{{ sneaker.colorway }}</p>
+          <p class="sneaker-price">{{ sneaker.price }} €</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BACK -->
+  <div class="back-section">
+    <button class="backButton" (click)="returnToPlayers()">
+      <img src="assets/images/retour.png" />
+    </button>
+  </div>
+
 </div>
