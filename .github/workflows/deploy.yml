@@ -1,4 +1,4 @@
-name: Déploiement automatique
+name: Build & Push to GHCR
 
 on:
   push:
@@ -6,14 +6,34 @@ on:
       - 'v*'
 
 jobs:
-  deploy:
+  build-and-push:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
     steps:
-      - name: Connexion SSH et déploiement
-        uses: appleboy/ssh-action@v1.0.3
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
         with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          port: ${{ secrets.SSH_PORT }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: exit
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ./DockerFile
+          push: true
+          tags: |
+            ghcr.io/tiagz/basket4ballers:latest
+            ghcr.io/tiagz/basket4ballers:${{ github.ref_name }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
