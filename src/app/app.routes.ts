@@ -6,6 +6,8 @@ import { SneakersComponent } from './sneakers/sneakers.component';
 import { MarquesComponent } from './marques/marques.component';
 import { TopComponent } from './top/top.component';
 import { BrandDetailComponent } from './brand-detail/brand-detail.component';
+import { CompareComponent } from './compare/compare.component';
+import { QuizComponent } from './quiz/quiz.component';
 
 export const routes: Routes = [
     { path: 'players', component: PlayerCardComponent },
@@ -14,7 +16,8 @@ export const routes: Routes = [
     { path: 'marques', component: MarquesComponent },
     { path: 'marques/:id', component: BrandDetailComponent },
     { path: 'top', component: TopComponent },
+    { path: 'compare', component: CompareComponent },
+    { path: 'quiz', component: QuizComponent },
     { path: '', redirectTo: 'players', pathMatch: 'full' },
     { path: '**', component: PageNotFoundComponent },
 ];
-

@@ -1,0 +1,52 @@
+<div class="page">
+  <h1 class="section-title">Quiz Sneakers</h1>
+
+  <div class="scoreboard">
+    <div class="score-item">
+      <span class="score-val">{{ score }}</span>
+      <span class="score-label">Score</span>
+    </div>
+    <div class="score-item">
+      <span class="score-val">🔥 {{ streak }}</span>
+      <span class="score-label">Streak</span>
+    </div>
+    <div class="score-item">
+      <span class="score-val">{{ accuracy }}%</span>
+      <span class="score-label">Précision</span>
+    </div>
+  </div>
+
+  <div class="quiz-card" *ngIf="question">
+    <p class="question-label">Quel joueur porte cette sneaker ?</p>
+
+    <div class="sneaker-display">
+      <img class="sneaker-img" [src]="question.sneaker.img" [alt]="question.sneaker.name" />
+    </div>
+
+    <div class="options">
+      <button
+        *ngFor="let opt of question.options"
+        class="option-btn"
+        [class.correct]="selectedAnswer && isOptionCorrect(opt)"
+        [class.wrong]="selectedAnswer === opt && !isCorrect"
+        [disabled]="!!selectedAnswer"
+        (click)="answer(opt)"
+      >
+        <img class="opt-img" [src]="opt.img" [alt]="opt.last_name" />
+        <span>{{ opt.first_name }} {{ opt.last_name }}</span>
+      </button>
+    </div>
+
+    <div class="result" *ngIf="selectedAnswer">
+      <p class="result-text correct-text" *ngIf="isCorrect">Bonne réponse !</p>
+      <p class="result-text wrong-text" *ngIf="!isCorrect">
+        C'était {{ question.correctPlayers[0].first_name }} {{ question.correctPlayers[0].last_name }} !
+      </p>
+      <div class="sneaker-reveal">
+        <span class="sneaker-name-reveal">{{ question.sneaker.name }}</span>
+        <span class="sneaker-colorway-reveal">{{ question.sneaker.colorway }}</span>
+      </div>
+      <button class="next-btn" (click)="nextQuestion()">Question suivante →</button>
+    </div>
+  </div>
+</div>

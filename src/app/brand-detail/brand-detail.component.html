@@ -1,4 +1,4 @@
-<div class="page" *ngIf="brand">
+<div class="page" *ngIf="brand; else notFound">
 
   <!-- HERO -->
   <div class="hero">
@@ -44,3 +44,12 @@
   </div>
 
 </div>
+
+<ng-template #notFound>
+  <div class="not-found-page">
+    <p class="not-found-emoji">🤷</p>
+    <h2 class="not-found-title">Marque inconnue</h2>
+    <p class="not-found-sub">Cette marque n'existe pas dans notre base.</p>
+    <button class="not-found-btn" (click)="goBack()">Retour aux marques</button>
+  </div>
+</ng-template>

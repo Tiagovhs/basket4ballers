@@ -1,0 +1,98 @@
+<div class="page">
+  <h1 class="section-title">Comparateur</h1>
+
+  <div class="selectors">
+    <select class="player-select" [(ngModel)]="player1Id">
+      <option value="">— Joueur 1 —</option>
+      <option *ngFor="let p of players" [value]="p.id">{{ p.first_name }} {{ p.last_name }}</option>
+    </select>
+    <span class="vs">VS</span>
+    <select class="player-select" [(ngModel)]="player2Id">
+      <option value="">— Joueur 2 —</option>
+      <option *ngFor="let p of players" [value]="p.id">{{ p.first_name }} {{ p.last_name }}</option>
+    </select>
+  </div>
+
+  <div class="comparison" *ngIf="player1 && player2">
+
+    <!-- Portraits -->
+    <div class="portraits">
+      <div class="portrait-card" [style.border-color]="player1.team.color">
+        <img class="face" [src]="player1.img" [alt]="player1.last_name" />
+        <div class="portrait-info">
+          <p class="pname">{{ player1.last_name }} <span>{{ player1.first_name }}</span></p>
+          <p class="team" [style.color]="player1.team.color">{{ player1.team.name }}</p>
+          <p class="poste">{{ player1.poste }}</p>
+        </div>
+      </div>
+
+      <div class="portrait-card" [style.border-color]="player2.team.color">
+        <img class="face" [src]="player2.img" [alt]="player2.last_name" />
+        <div class="portrait-info">
+          <p class="pname">{{ player2.last_name }} <span>{{ player2.first_name }}</span></p>
+          <p class="team" [style.color]="player2.team.color">{{ player2.team.name }}</p>
+          <p class="poste">{{ player2.poste }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-table">
+      <div class="stat-row" *ngFor="let stat of stats">
+        <div
+          class="stat-val left"
+          [class.winner]="better(player1.stats[stat.key], player2.stats[stat.key]) === 'left'"
+        >{{ player1.stats[stat.key] }}</div>
+        <div class="stat-label">{{ stat.label }}</div>
+        <div
+          class="stat-val right"
+          [class.winner]="better(player1.stats[stat.key], player2.stats[stat.key]) === 'right'"
+        >{{ player2.stats[stat.key] }}</div>
+      </div>
+
+      <div class="stat-row">
+        <div class="stat-val left">{{ player1.age }} ans</div>
+        <div class="stat-label">Âge</div>
+        <div class="stat-val right">{{ player2.age }} ans</div>
+      </div>
+
+      <div class="stat-row">
+        <div class="stat-val left">#{{ player1.draftPick }} ({{ player1.draftYear }})</div>
+        <div class="stat-label">Draft</div>
+        <div class="stat-val right">#{{ player2.draftPick }} ({{ player2.draftYear }})</div>
+      </div>
+    </div>
+
+    <!-- Sneakers -->
+    <div class="sneakers-compare">
+      <div class="sneakers-col">
+        <h3 class="col-title">Ses paires</h3>
+        <div class="sneaker-mini" *ngFor="let s of getSneakers(player1)">
+          <img [src]="s.img" [alt]="s.name" />
+          <div>
+            <p class="sname">{{ s.name }}</p>
+            <p class="scolor">{{ s.colorway }}</p>
+            <p class="sprice">{{ s.price }} €</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="sneakers-col">
+        <h3 class="col-title">Ses paires</h3>
+        <div class="sneaker-mini" *ngFor="let s of getSneakers(player2)">
+          <img [src]="s.img" [alt]="s.name" />
+          <div>
+            <p class="sname">{{ s.name }}</p>
+            <p class="scolor">{{ s.colorway }}</p>
+            <p class="sprice">{{ s.price }} €</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <p class="placeholder" *ngIf="!player1 || !player2">
+    Sélectionne deux joueurs pour comparer leurs stats et sneakers.
+  </p>
+</div>

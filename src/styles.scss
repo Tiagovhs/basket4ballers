@@ -1,6 +1,11 @@
-body{
-    padding:0;
-    margin:0;
+*, *::before, *::after {
+  box-sizing: border-box;
 }
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: rgb(8, 8, 8);
+  font-family: 'Poppins', 'Arial Narrow Bold', Roboto, "Helvetica Neue", sans-serif;
+}

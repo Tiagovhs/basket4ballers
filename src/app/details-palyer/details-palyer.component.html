@@ -1,4 +1,4 @@
-<div class="page" *ngIf="currentPlayer">
+<div class="page" *ngIf="currentPlayer; else notFound">
 
   <!-- HERO -->
   <div class="hero" [style.border-bottom-color]="currentPlayer.team.color">
@@ -86,3 +86,12 @@
   </div>
 
 </div>
+
+<ng-template #notFound>
+  <div class="not-found-page">
+    <p class="not-found-emoji">🤷</p>
+    <h2 class="not-found-title">Joueur inconnu</h2>
+    <p class="not-found-sub">Ce joueur n'existe pas dans notre base.</p>
+    <button class="not-found-btn" (click)="returnToPlayers()">Retour aux joueurs</button>
+  </div>
+</ng-template>

@@ -1,0 +1,216 @@
+* {
+  font-family: 'Poppins', 'Arial Narrow Bold', sans-serif;
+  color: aliceblue;
+  box-sizing: border-box;
+}
+
+.page {
+  background-color: rgb(8, 8, 8);
+  min-height: 100vh;
+  padding: 32px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.section-title {
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: 32px;
+  text-align: center;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+/* ── Scoreboard ── */
+.scoreboard {
+  display: flex;
+  gap: 32px;
+  margin-bottom: 40px;
+  background-color: rgb(16, 16, 16);
+  border-radius: 14px;
+  padding: 16px 40px;
+}
+
+.score-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.score-val {
+  font-size: 1.8rem;
+  font-weight: 900;
+}
+
+.score-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: rgb(140, 140, 140);
+}
+
+/* ── Quiz card ── */
+.quiz-card {
+  background-color: rgb(14, 14, 14);
+  border-radius: 18px;
+  padding: 32px 28px;
+  max-width: 560px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+.question-label {
+  font-size: 15px;
+  font-weight: 600;
+  color: rgb(200, 200, 200);
+  text-align: center;
+  margin: 0;
+}
+
+/* ── Sneaker image ── */
+.sneaker-display {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.sneaker-img {
+  width: 280px;
+  height: 188px;
+  object-fit: cover;
+  border-radius: 12px;
+  background-color: rgb(255, 255, 255, 0.05);
+}
+
+/* ── Options ── */
+.options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  width: 100%;
+}
+
+.option-btn {
+  background-color: rgb(22, 22, 22);
+  border: 2px solid rgb(40, 40, 40);
+  border-radius: 12px;
+  padding: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: border-color 0.2s, background-color 0.2s;
+  text-align: left;
+
+  &:hover:not(:disabled) {
+    border-color: rgb(80, 80, 80);
+    background-color: rgb(30, 30, 30);
+  }
+
+  &:disabled {
+    cursor: default;
+  }
+
+  &.correct {
+    border-color: rgb(34, 197, 94);
+    background-color: rgba(34, 197, 94, 0.1);
+  }
+
+  &.wrong {
+    border-color: rgb(172, 18, 18);
+    background-color: rgba(172, 18, 18, 0.12);
+  }
+
+  span {
+    font-size: 13px;
+    font-weight: 700;
+  }
+}
+
+.opt-img {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: top;
+  background-color: rgb(30, 30, 30);
+  flex-shrink: 0;
+}
+
+/* ── Result ── */
+.result {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.result-text {
+  font-size: 1.1rem;
+  font-weight: 800;
+  margin: 0;
+}
+
+.correct-text {
+  color: rgb(34, 197, 94);
+}
+
+.wrong-text {
+  color: rgb(172, 18, 18);
+}
+
+.sneaker-reveal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.sneaker-name-reveal {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.sneaker-colorway-reveal {
+  font-size: 12px;
+  color: rgb(150, 150, 150);
+}
+
+.next-btn {
+  margin-top: 8px;
+  background-color: rgb(172, 18, 18);
+  border: none;
+  border-radius: 10px;
+  padding: 12px 28px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: rgb(200, 30, 30);
+  }
+}
+
+@media (max-width: 480px) {
+  .scoreboard {
+    gap: 20px;
+    padding: 14px 20px;
+  }
+
+  .options {
+    grid-template-columns: 1fr;
+  }
+
+  .sneaker-img {
+    width: 100%;
+    height: auto;
+  }
+}

@@ -1,7 +1,30 @@
 <div class="page">
   <h1 class="section-title">Sneakers</h1>
-  <div class="grid">
-    <div *ngFor="let sneaker of sneakers" class="card">
+
+  <div class="filters-bar">
+    <input
+      class="search-input"
+      type="text"
+      placeholder="Rechercher une sneaker..."
+      [(ngModel)]="searchQuery"
+    />
+    <select class="filter-select" [(ngModel)]="selectedBrand">
+      <option value="">Toutes les marques</option>
+      <option *ngFor="let brand of brands" [value]="brand">{{ brand }}</option>
+    </select>
+    <select class="filter-select" [(ngModel)]="selectedPriceRange">
+      <option value="">Tous les prix</option>
+      <option *ngFor="let range of priceRanges" [value]="range.label">{{ range.label }}</option>
+    </select>
+    <button class="clear-btn" *ngIf="hasActiveFilters" (click)="clearFilters()">Effacer</button>
+  </div>
+
+  <p class="result-count" *ngIf="hasActiveFilters">
+    {{ filteredSneakers.length }} résultat{{ filteredSneakers.length !== 1 ? 's' : '' }}
+  </p>
+
+  <div class="grid" *ngIf="filteredSneakers.length > 0; else noResults">
+    <div *ngFor="let sneaker of filteredSneakers" class="card">
       <div class="img-wrapper">
         <img [src]="sneaker.img" [alt]="sneaker.name" />
       </div>
@@ -13,4 +36,8 @@
       </div>
     </div>
   </div>
+
+  <ng-template #noResults>
+    <p class="no-results">Aucune sneaker trouvée.</p>
+  </ng-template>
 </div>
