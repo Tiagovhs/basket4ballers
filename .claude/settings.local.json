@@ -7,7 +7,8 @@
       "WebFetch(domain:hypebeast.com)",
       "WebFetch(domain:www.stickpng.com)",
       "WebFetch(domain:commons.wikimedia.org)",
-      "Bash(npx ng:*)"
+      "Bash(npx ng:*)",
+      "Bash(npm run:*)"
     ]
   }
 }
