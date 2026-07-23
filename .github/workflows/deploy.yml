@@ -1,3 +1,4 @@
+# A placer dans : .github/workflows/deploy.yml
 name: Build & Push to GHCR
 
 on:
@@ -33,8 +34,7 @@ jobs:
           file: ./DockerFile
           push: true
           tags: |
-            tags: |
-              ghcr.io/${{ github.repository_owner }}/basket4ballers:latest
-              ghcr.io/${{ github.repository_owner }}/basket4ballers:${{ github.ref_name }}
+            ghcr.io/${{ github.repository_owner }}/basket4ballers:latest
+            ghcr.io/${{ github.repository_owner }}/basket4ballers:${{ github.ref_name }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
