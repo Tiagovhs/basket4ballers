@@ -19,6 +19,96 @@
   text-transform: uppercase;
 }
 
+/* ── Sneaker du jour ── */
+.sotd-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  background: linear-gradient(135deg, rgb(18, 18, 18) 60%, rgb(172, 18, 18, 0.15) 100%);
+  border: 1px solid rgb(172, 18, 18, 0.3);
+  border-radius: 18px;
+  padding: 28px 32px;
+  margin-bottom: 48px;
+  overflow: hidden;
+}
+
+.sotd-label-col {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+}
+
+.sotd-badge {
+  display: inline-block;
+  background-color: rgb(172, 18, 18);
+  color: aliceblue;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 4px;
+  width: fit-content;
+}
+
+.sotd-name {
+  font-size: 1.5rem;
+  font-weight: 900;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.sotd-colorway {
+  font-size: 13px;
+  color: rgb(160, 160, 160);
+  margin: 0;
+}
+
+.sotd-brand {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: rgb(130, 130, 130);
+  margin: 0;
+}
+
+.sotd-price {
+  font-size: 1.4rem;
+  font-weight: 900;
+  margin: 4px 0 0;
+  color: aliceblue;
+}
+
+.sotd-img-col {
+  flex-shrink: 0;
+}
+
+.sotd-img {
+  width: 220px;
+  height: 148px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+@media (max-width: 600px) {
+  .sotd-banner {
+    flex-direction: column-reverse;
+    padding: 20px;
+  }
+
+  .sotd-img {
+    width: 100%;
+    height: 160px;
+  }
+
+  .sotd-name {
+    font-size: 1.2rem;
+  }
+}
+
 /* ── Filters ── */
 .filters-bar {
   display: flex;

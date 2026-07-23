@@ -217,6 +217,110 @@
   margin: 0;
 }
 
+/* ── TIMELINE ── */
+.timeline-section {
+  padding: 28px 40px;
+  border-bottom: 1px solid rgb(30, 30, 30);
+}
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+}
+
+.timeline-item {
+  display: grid;
+  grid-template-columns: 80px 32px 1fr;
+  gap: 0 12px;
+  align-items: flex-start;
+}
+
+.timeline-left {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 10px;
+}
+
+.season-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: rgb(150, 150, 150);
+  white-space: nowrap;
+}
+
+.timeline-axis {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: rgb(172, 18, 18);
+  flex-shrink: 0;
+  margin-top: 8px;
+}
+
+.line {
+  width: 2px;
+  flex: 1;
+  min-height: 28px;
+  background-color: rgb(40, 40, 40);
+  margin: 4px 0;
+}
+
+.timeline-right {
+  padding-bottom: 20px;
+}
+
+.tl-sneaker-card {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  background-color: rgb(18, 18, 18);
+  border-radius: 10px;
+  padding: 10px 14px;
+  border: 1px solid rgb(32, 32, 32);
+}
+
+.tl-sneaker-img {
+  width: 80px;
+  height: 54px;
+  object-fit: cover;
+  border-radius: 6px;
+  flex-shrink: 0;
+  background-color: rgb(30, 30, 30);
+}
+
+.tl-sneaker-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.tl-brand {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: rgb(150, 150, 150);
+}
+
+.tl-name {
+  font-size: 13px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.tl-note {
+  font-size: 11px;
+  color: rgb(172, 18, 18);
+  font-weight: 600;
+  margin: 0;
+}
+
 /* ── BACK ── */
 .back-section {
   padding: 20px 40px;
@@ -264,8 +368,17 @@
   .name { font-size: 1.5rem; }
   .numero { font-size: 48px; }
 
-  .quote-section, .stats-section, .wiki-section, .sneakers-section, .back-section {
-    padding: 20px 20px;
+  .quote-section, .stats-section, .wiki-section, .sneakers-section, .timeline-section, .back-section {
+    padding: 20px 16px;
+  }
+
+  .timeline-item {
+    grid-template-columns: 68px 28px 1fr;
+  }
+
+  .tl-sneaker-img {
+    width: 60px;
+    height: 40px;
   }
 
   .wiki-grid {

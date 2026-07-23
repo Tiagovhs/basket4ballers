@@ -78,6 +78,32 @@
     </div>
   </div>
 
+  <!-- TIMELINE -->
+  <div class="timeline-section" *ngIf="timeline.length > 0">
+    <h2 class="section-title">Timeline des paires</h2>
+    <div class="timeline">
+      <div class="timeline-item" *ngFor="let entry of timeline; let last = last">
+        <div class="timeline-left">
+          <span class="season-label">{{ entry.season }}</span>
+        </div>
+        <div class="timeline-axis">
+          <div class="dot"></div>
+          <div class="line" *ngIf="!last"></div>
+        </div>
+        <div class="timeline-right" *ngIf="getSneakerById(entry.sneakerId) as sneaker">
+          <div class="tl-sneaker-card">
+            <img class="tl-sneaker-img" [src]="sneaker.img" [alt]="sneaker.name" />
+            <div class="tl-sneaker-info">
+              <span class="tl-brand">{{ sneaker.brand }}</span>
+              <p class="tl-name">{{ sneaker.name }}</p>
+              <p class="tl-note" *ngIf="entry.note">{{ entry.note }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- BACK -->
   <div class="back-section">
     <button class="backButton" (click)="returnToPlayers()">

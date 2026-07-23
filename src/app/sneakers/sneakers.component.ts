@@ -27,6 +27,12 @@ export class SneakersComponent {
     { label: 'Plus de 200€', min: 200, max: Infinity },
   ];
 
+  get sneakerOfTheDay(): Sneaker {
+    const start = new Date(new Date().getFullYear(), 0, 0).getTime();
+    const dayOfYear = Math.floor((Date.now() - start) / 86400000);
+    return SNEAKERS[dayOfYear % SNEAKERS.length];
+  }
+
   get filteredSneakers(): Sneaker[] {
     let result = this.sneakers;
 

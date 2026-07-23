@@ -1,6 +1,22 @@
 <div class="page">
+
+  <!-- PAIRE DU JOUR -->
+  <div class="sotd-banner">
+    <div class="sotd-label-col">
+      <span class="sotd-badge">PAIRE DU JOUR</span>
+      <h2 class="sotd-name">{{ sneakerOfTheDay.name }}</h2>
+      <p class="sotd-colorway">{{ sneakerOfTheDay.colorway }}</p>
+      <p class="sotd-brand">{{ sneakerOfTheDay.brand }}</p>
+      <p class="sotd-price">{{ sneakerOfTheDay.price }} €</p>
+    </div>
+    <div class="sotd-img-col">
+      <img class="sotd-img" [src]="sneakerOfTheDay.img" [alt]="sneakerOfTheDay.name" />
+    </div>
+  </div>
+
   <h1 class="section-title">Sneakers</h1>
 
+  <!-- FILTERS -->
   <div class="filters-bar">
     <input
       class="search-input"
