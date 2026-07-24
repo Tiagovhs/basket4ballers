@@ -13,7 +13,7 @@
   </div>
 
   <!-- QUOTE -->
-  <div class="quote-section">
+  <div class="quote-section" *ngIf="currentPlayer.quote">
     <p class="quote">"{{ currentPlayer.quote }}"</p>
   </div>
 
@@ -49,11 +49,7 @@
         <span class="wiki-label">Poste</span>
         <span class="wiki-value">{{ currentPlayer.poste }}</span>
       </div>
-      <div class="wiki-item">
-        <span class="wiki-label">Âge</span>
-        <span class="wiki-value">{{ currentPlayer.age }} ans</span>
-      </div>
-      <div class="wiki-item">
+      <div class="wiki-item" *ngIf="currentPlayer.allTeams.length > 0">
         <span class="wiki-label">Équipes</span>
         <span class="wiki-value">{{ currentPlayer.allTeams.join(' → ') }}</span>
       </div>

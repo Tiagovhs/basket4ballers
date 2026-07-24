@@ -2,14 +2,14 @@
   <h1 class="section-title">Comparateur</h1>
 
   <div class="selectors">
-    <select class="player-select" [(ngModel)]="player1Id">
+    <select class="player-select" [ngModel]="player1Id" (ngModelChange)="onPlayer1Change($event)">
       <option value="">— Joueur 1 —</option>
-      <option *ngFor="let p of players" [value]="p.id">{{ p.first_name }} {{ p.last_name }}</option>
+      <option *ngFor="let p of players" [value]="p.id">{{ p.firstName }} {{ p.lastName }}</option>
     </select>
     <span class="vs">VS</span>
-    <select class="player-select" [(ngModel)]="player2Id">
+    <select class="player-select" [ngModel]="player2Id" (ngModelChange)="onPlayer2Change($event)">
       <option value="">— Joueur 2 —</option>
-      <option *ngFor="let p of players" [value]="p.id">{{ p.first_name }} {{ p.last_name }}</option>
+      <option *ngFor="let p of players" [value]="p.id">{{ p.firstName }} {{ p.lastName }}</option>
     </select>
   </div>
 
@@ -48,12 +48,6 @@
           class="stat-val right"
           [class.winner]="better(player1.stats[stat.key], player2.stats[stat.key]) === 'right'"
         >{{ player2.stats[stat.key] }}</div>
-      </div>
-
-      <div class="stat-row">
-        <div class="stat-val left">{{ player1.age }} ans</div>
-        <div class="stat-label">Âge</div>
-        <div class="stat-val right">{{ player2.age }} ans</div>
       </div>
 
       <div class="stat-row">

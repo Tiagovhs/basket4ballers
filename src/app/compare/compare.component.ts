@@ -1,10 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { PLAYERS } from '../mock/mock-players';
+import { forkJoin } from 'rxjs';
 import { SNEAKERS } from '../mock/mock-sneakers';
 import { Player } from '../models/player';
+import { PlayerAPI } from '../models/player-api';
 import { Sneaker } from '../models/sneaker';
+import { PlayerService } from '../services/player/player.service';
+import { playerApiToPlayer } from '../utils/player-mapper';
 
 @Component({
   selector: 'app-compare',
@@ -13,17 +16,42 @@ import { Sneaker } from '../models/sneaker';
   templateUrl: './compare.component.html',
   styleUrl: './compare.component.scss',
 })
-export class CompareComponent {
-  players = PLAYERS;
-  player1Id: number | '' = '';
-  player2Id: number | '' = '';
+export class CompareComponent implements OnInit {
 
-  get player1(): Player | undefined {
-    return this.players.find(p => p.id === +this.player1Id);
+  players: PlayerAPI[] = [];
+  player1Id = '';
+  player2Id = '';
+  player1: Player | undefined;
+  player2: Player | undefined;
+
+  constructor(private playerService: PlayerService) {}
+
+  ngOnInit() {
+    this.playerService.getPlayers().subscribe(players => {
+      this.players = players;
+    });
   }
 
-  get player2(): Player | undefined {
-    return this.players.find(p => p.id === +this.player2Id);
+  onPlayer1Change(id: string) {
+    this.player1Id = id;
+    if (!id) { this.player1 = undefined; return; }
+    forkJoin([
+      this.playerService.getPlayer(+id),
+      this.playerService.getPlayerStats(+id)
+    ]).subscribe(([p, stats]) => {
+      this.player1 = playerApiToPlayer(p, stats);
+    });
+  }
+
+  onPlayer2Change(id: string) {
+    this.player2Id = id;
+    if (!id) { this.player2 = undefined; return; }
+    forkJoin([
+      this.playerService.getPlayer(+id),
+      this.playerService.getPlayerStats(+id)
+    ]).subscribe(([p, stats]) => {
+      this.player2 = playerApiToPlayer(p, stats);
+    });
   }
 
   getSneakers(player: Player): Sneaker[] {

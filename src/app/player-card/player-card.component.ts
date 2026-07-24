@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Player } from '../models/player';
 import { NonSelectableDirective } from '../directives/non-selectable.directive';
-import { PLAYERS } from '../mock/mock-players';
 import { Router } from '@angular/router';
+import { PlayerService } from '../services/player/player.service';
+import { playerApiToPlayer } from '../utils/player-mapper';
 
 @Component({
   selector: 'app-player-card',
@@ -12,12 +13,13 @@ import { Router } from '@angular/router';
   templateUrl: './player-card.component.html',
   styleUrl: './player-card.component.scss',
 })
-export class PlayerCardComponent {
+export class PlayerCardComponent implements OnInit {
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private playerService: PlayerService) {}
 
-  allPlayers: Player[] = PLAYERS;
+  allPlayers: Player[] = [];
   hoveredCard: Player | null = null;
+  isLoading = true;
 
   searchQuery = '';
   selectedTeam = '';
@@ -25,8 +27,17 @@ export class PlayerCardComponent {
   currentPage = 1;
   readonly pageSize = 12;
 
-  teams = [...new Set(PLAYERS.map(p => p.team.name))].sort();
-  postes = [...new Set(PLAYERS.map(p => p.poste))].sort();
+  teams: string[] = [];
+  postes: string[] = [];
+
+  ngOnInit() {
+    this.playerService.getPlayers().subscribe(players => {
+      this.allPlayers = players.map(p => playerApiToPlayer(p));
+      this.teams = [...new Set(this.allPlayers.map(p => p.team.name))].sort();
+      this.postes = [...new Set(this.allPlayers.map(p => p.poste))].sort();
+      this.isLoading = false;
+    });
+  }
 
   get filteredPlayers(): Player[] {
     const q = this.searchQuery.toLowerCase();
