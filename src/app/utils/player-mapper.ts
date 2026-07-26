@@ -20,8 +20,11 @@ import { getTeamMeta } from './team-meta';
         color: meta.color,
         id: meta.logoUrl,
       },
-      draftYear: api.draftYear,
-      draftPick: api.draftNumber,
+      draftYear: api.draftYear ?? null,
+      draftRound: api.draftRound ?? null,
+      draftPick: api.draftNumber ?? null,
+      undrafted: !api.draftYear && !api.draftRound && !api.draftNumber,
+      college: api.college ?? null,
       allTeams,
       quote: '',
       stats: {

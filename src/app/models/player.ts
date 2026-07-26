@@ -9,8 +9,11 @@ export interface Player {
   number: number | null;
   img: string;
   team: Team;
-  draftYear: number;
-  draftPick: number;
+  draftYear: number | null;
+  draftRound: number | null;
+  draftPick: number | null;
+  undrafted: boolean;
+  college: string | null;
   allTeams: string[];
   quote: string;
   stats: { ppg: number; rpg: number; apg: number; fgp: number };

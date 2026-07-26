@@ -43,15 +43,16 @@
     <div class="wiki-grid">
       <div class="wiki-item">
         <span class="wiki-label">Draft</span>
-        <span class="wiki-value">{{ currentPlayer.draftYear }} — Choix n°{{ currentPlayer.draftPick }}</span>
+        <span class="wiki-value" *ngIf="!currentPlayer.undrafted">{{ currentPlayer.draftYear }} — Choix n°{{ currentPlayer.draftPick }}</span>
+        <span class="wiki-value" *ngIf="currentPlayer.undrafted">Undrafted</span>
       </div>
       <div class="wiki-item">
         <span class="wiki-label">Poste</span>
         <span class="wiki-value">{{ currentPlayer.poste }}</span>
       </div>
-      <div class="wiki-item" *ngIf="currentPlayer.allTeams.length > 0">
-        <span class="wiki-label">Équipes</span>
-        <span class="wiki-value">{{ currentPlayer.allTeams.join(' → ') }}</span>
+      <div class="wiki-item" *ngIf="currentPlayer.college">
+        <span class="wiki-label">Université</span>
+        <span class="wiki-value">{{ currentPlayer.college }}</span>
       </div>
     </div>
   </div>
