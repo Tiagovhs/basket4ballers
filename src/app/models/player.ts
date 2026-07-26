@@ -6,7 +6,7 @@ export interface Player {
   last_name: string;
   age: number;
   poste: string;
-  number: number;
+  number: number | null;
   img: string;
   team: Team;
   draftYear: number;

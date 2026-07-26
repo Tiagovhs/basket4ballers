@@ -26,8 +26,14 @@
     <span class="results-count">{{ filteredPlayers.length }} joueur{{ filteredPlayers.length > 1 ? 's' : '' }}</span>
   </div>
 
+  <!-- CHARGEMENT -->
+  <div class="loading" *ngIf="isLoading">
+    <div class="spinner"></div>
+    <p>Chargement des joueurs...</p>
+  </div>
+
   <!-- CARDS -->
-  <div class="wrapper" appNonSelectable>
+  <div class="wrapper" appNonSelectable *ngIf="!isLoading">
     <div *ngFor="let joueur of paginatedPlayers"
          class="card"
          [ngClass]="{'hover': hoveredCard === joueur}"
@@ -35,10 +41,11 @@
          (mouseenter)="setHoveredCard(joueur)"
          (mouseleave)="resetHoveredCard()">
       <div class="container">
-        <p class="foreground" style="font-weight:800;">{{ joueur.last_name }} {{ joueur.first_name }}</p>
+        <p class="foreground" style="font-weight:800;">{{ joueur.first_name }} {{ joueur.last_name }}</p>
         <p style="text-align: end; font-weight: 600;" class="foreground">{{ joueur.poste }}</p>
-        <span [ngStyle]="{'color': hoveredCard === joueur ? joueur.team.color : 'rgb(64, 63, 63)'}" class="background">{{ joueur.number }}</span>
-        <img class="logoFranchise" [src]="joueur.team.id" [alt]="joueur.team.name">
+        <span [ngStyle]="{'color': hoveredCard === joueur ? joueur.team.color : 'rgb(64, 63, 63)'}" class="background">{{ joueur.number ?? 'X' }}</span>
+        <img *ngIf="joueur.team.name !== 'Agent libre'" class="logoFranchise" [src]="joueur.team.id" [alt]="joueur.team.name">
+        <span *ngIf="joueur.team.name === 'Agent libre'" class="free-agent-label">Agent libre</span>
         <img class="face" [src]="joueur.img" [alt]="joueur.last_name+' photo'">
       </div>
     </div>
@@ -51,13 +58,16 @@
   <!-- PAGINATION -->
   <div class="pagination" *ngIf="totalPages > 1">
     <button class="page-btn" (click)="setPage(currentPage - 1)" [disabled]="currentPage === 1">&#8249;</button>
-    <button
-      class="page-btn"
-      *ngFor="let page of pageNumbers"
-      [class.active]="page === currentPage"
-      (click)="setPage(page)">
-      {{ page }}
-    </button>
+    <ng-container *ngFor="let page of pageNumbers">
+      <span *ngIf="page === null" class="page-ellipsis">…</span>
+      <button
+        *ngIf="page !== null"
+        class="page-btn"
+        [class.active]="page === currentPage"
+        (click)="setPage(page)">
+        {{ page }}
+      </button>
+    </ng-container>
     <button class="page-btn" (click)="setPage(currentPage + 1)" [disabled]="currentPage === totalPages">&#8250;</button>
   </div>
 

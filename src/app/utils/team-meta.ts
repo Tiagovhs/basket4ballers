@@ -32,7 +32,7 @@ const TEAM_META: Record<string, TeamMeta> = {
   CHI: { color: '#CE1141', logoUrl: 'https://cdn.nba.com/logos/nba/1610612741/global/L/logo.svg' },
   HOU: { color: '#CE1141', logoUrl: 'https://cdn.nba.com/logos/nba/1610612745/global/L/logo.svg' },
   SAC: { color: '#5A2D81', logoUrl: 'https://cdn.nba.com/logos/nba/1610612758/global/L/logo.svg' },
-  UTA: { color: '#002B5C', logoUrl: 'https://cdn.nba.com/logos/nba/1610612762/global/L/logo.svg' },
+  UTA: { color: '#31006F', logoUrl: 'https://cdn.nba.com/logos/nba/1610612762/global/L/logo.svg' },
   WAS: { color: '#002B5C', logoUrl: 'https://cdn.nba.com/logos/nba/1610612764/global/L/logo.svg' },
 };
 

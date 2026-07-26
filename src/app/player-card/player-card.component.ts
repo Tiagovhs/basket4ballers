@@ -25,14 +25,15 @@ export class PlayerCardComponent implements OnInit {
   selectedTeam = '';
   selectedPoste = '';
   currentPage = 1;
-  readonly pageSize = 12;
+  readonly pageSize = 20;
 
   teams: string[] = [];
   postes: string[] = [];
 
   ngOnInit() {
     this.playerService.getPlayers().subscribe(players => {
-      this.allPlayers = players.map(p => playerApiToPlayer(p));
+      this.allPlayers = players.map(p => playerApiToPlayer(p))
+        .sort((a, b) => a.last_name.localeCompare(b.last_name));
       this.teams = [...new Set(this.allPlayers.map(p => p.team.name))].sort();
       this.postes = [...new Set(this.allPlayers.map(p => p.poste))].sort();
       this.isLoading = false;
@@ -58,8 +59,24 @@ export class PlayerCardComponent implements OnInit {
     return Math.ceil(this.filteredPlayers.length / this.pageSize);
   }
 
-  get pageNumbers(): number[] {
-    return Array.from({ length: this.totalPages }, (_, i) => i + 1);
+  get pageNumbers(): (number | null)[] {
+    const total = this.totalPages;
+    const cur = this.currentPage;
+    const delta = 2;
+    const pages: (number | null)[] = [];
+    const range: number[] = [];
+
+    for (let i = Math.max(2, cur - delta); i <= Math.min(total - 1, cur + delta); i++) {
+      range.push(i);
+    }
+
+    pages.push(1);
+    if (range[0] > 2) pages.push(null);
+    pages.push(...range);
+    if (range[range.length - 1] < total - 1) pages.push(null);
+    if (total > 1) pages.push(total);
+
+    return pages;
   }
 
   onSearch(event: Event) {
