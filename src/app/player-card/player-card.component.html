@@ -9,10 +9,26 @@
       [value]="searchQuery"
       (input)="onSearch($event)" />
 
-    <select class="filter-select" (change)="onTeamFilter($event)">
-      <option value="">Toutes les équipes</option>
-      <option *ngFor="let team of teams" [value]="team">{{ team }}</option>
-    </select>
+    <div class="team-dropdown">
+      <button class="team-trigger" [class.active]="selectedTeam" (click)="teamDropdownOpen = !teamDropdownOpen">
+        <img *ngIf="selectedTeamLogo" [src]="selectedTeamLogo" class="trigger-logo">
+        <span>{{ selectedTeam || 'Toutes les équipes' }}</span>
+        <span class="arrow" [class.open]="teamDropdownOpen">▾</span>
+      </button>
+      <div class="team-panel" *ngIf="teamDropdownOpen">
+        <div class="team-option" (click)="selectTeam('')">Toutes les équipes</div>
+        <div class="conference-label">Conférence Est</div>
+        <div class="team-option" *ngFor="let t of eastTeams" (click)="selectTeam(t.name)" [class.selected]="t.name === selectedTeam">
+          <img [src]="t.logoUrl" class="option-logo">
+          <span>{{ t.name }}</span>
+        </div>
+        <div class="conference-label">Conférence Ouest</div>
+        <div class="team-option" *ngFor="let t of westTeams" (click)="selectTeam(t.name)" [class.selected]="t.name === selectedTeam">
+          <img [src]="t.logoUrl" class="option-logo">
+          <span>{{ t.name }}</span>
+        </div>
+      </div>
+    </div>
 
     <select class="filter-select" (change)="onPosteFilter($event)">
       <option value="">Tous les postes</option>

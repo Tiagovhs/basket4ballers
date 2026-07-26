@@ -3,7 +3,7 @@ import { CareerStats, PlayerAPI } from '../models/player-api';
 import { getTeamMeta } from './team-meta';
 
  export function playerApiToPlayer(api: PlayerAPI, stats?: CareerStats[]): Player {
-    const meta = api.team ? getTeamMeta(api.team.abbreviation) : { color: '#000000', logoUrl: '' };
+    const meta = api.team ? getTeamMeta(api.team.abbreviation) : { color: '#000000', logoUrl: '', conference: '' as const };
     const latestStats = stats && stats.length > 0 ? stats[stats.length - 1] : undefined;
     const allTeams = stats ? [...new Set(stats.map(s => s.team))] : [];
 
@@ -19,6 +19,7 @@ import { getTeamMeta } from './team-meta';
         name: api.team?.fullName ?? 'Agent libre',
         color: meta.color,
         id: meta.logoUrl,
+        conference: meta.conference ?? '',
       },
       draftYear: api.draftYear ?? null,
       draftRound: api.draftRound ?? null,

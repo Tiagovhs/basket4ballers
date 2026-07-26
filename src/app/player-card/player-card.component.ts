@@ -1,10 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Player } from '../models/player';
 import { NonSelectableDirective } from '../directives/non-selectable.directive';
 import { Router } from '@angular/router';
 import { PlayerService } from '../services/player/player.service';
 import { playerApiToPlayer } from '../utils/player-mapper';
+
+interface TeamEntry {
+  name: string;
+  logoUrl: string;
+  conference: string;
+}
 
 @Component({
   selector: 'app-player-card',
@@ -27,17 +33,51 @@ export class PlayerCardComponent implements OnInit {
   currentPage = 1;
   readonly pageSize = 20;
 
-  teams: string[] = [];
+  teamsList: TeamEntry[] = [];
   postes: string[] = [];
+  teamDropdownOpen = false;
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent) {
+    const target = event.target as HTMLElement;
+    if (!target.closest('.team-dropdown')) {
+      this.teamDropdownOpen = false;
+    }
+  }
 
   ngOnInit() {
     this.playerService.getPlayers().subscribe(players => {
       this.allPlayers = players.map(p => playerApiToPlayer(p))
         .sort((a, b) => a.last_name.localeCompare(b.last_name));
-      this.teams = [...new Set(this.allPlayers.map(p => p.team.name))].sort();
-      this.postes = [...new Set(this.allPlayers.map(p => p.poste))].sort();
+
+      const seen = new Set<string>();
+      this.teamsList = this.allPlayers
+        .filter(p => p.team.name !== 'Agent libre')
+        .map(p => ({ name: p.team.name, logoUrl: p.team.id, conference: p.team.conference }))
+        .filter(t => { if (seen.has(t.name)) return false; seen.add(t.name); return true; })
+        .sort((a, b) => a.name.localeCompare(b.name));
+
+      this.postes = [...new Set(this.allPlayers.map(p => p.poste))].filter(Boolean).sort();
       this.isLoading = false;
     });
+  }
+
+  get eastTeams(): TeamEntry[] {
+    return this.teamsList.filter(t => t.conference === 'East');
+  }
+
+  get westTeams(): TeamEntry[] {
+    return this.teamsList.filter(t => t.conference === 'West');
+  }
+
+  get selectedTeamLogo(): string | null {
+    return this.teamsList.find(t => t.name === this.selectedTeam)?.logoUrl ?? null;
+  }
+
+  selectTeam(name: string) {
+    this.selectedTeam = name;
+    this.teamDropdownOpen = false;
+    this.currentPage = 1;
   }
 
   get filteredPlayers(): Player[] {
@@ -81,11 +121,6 @@ export class PlayerCardComponent implements OnInit {
 
   onSearch(event: Event) {
     this.searchQuery = (event.target as HTMLInputElement).value;
-    this.currentPage = 1;
-  }
-
-  onTeamFilter(event: Event) {
-    this.selectedTeam = (event.target as HTMLSelectElement).value;
     this.currentPage = 1;
   }
 

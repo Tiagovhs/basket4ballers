@@ -2,13 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { CareerStats, PlayerAPI } from '../../models/player-api';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PlayerService {
 
-  private readonly BASE_URL = 'http://localhost:8080/api';
+  private readonly BASE_URL = environment.apiUrl;
 
   constructor(private httpClient: HttpClient) {}
 
