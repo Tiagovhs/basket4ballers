@@ -1,0 +1,133 @@
+.page {
+  background-color: rgb(8, 8, 8);
+  min-height: 100vh;
+  padding: 40px 32px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.title {
+  color: aliceblue;
+  font-size: 28px;
+  font-weight: 800;
+  margin: 0 0 6px;
+}
+
+.subtitle {
+  color: rgb(100, 100, 100);
+  font-size: 13px;
+  margin: 0 0 40px;
+}
+
+.steps {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 680px;
+}
+
+.step {
+  background-color: rgb(14, 14, 14);
+  border: 1px solid rgb(35, 35, 35);
+  border-radius: 12px;
+  padding: 20px 24px;
+  transition: border-color 0.2s;
+
+  &.running { border-color: rgb(60, 120, 200); }
+  &.done    { border-color: rgb(30, 130, 60); }
+  &.error   { border-color: rgb(160, 40, 40); }
+}
+
+.step-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.step-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.step-label {
+  color: aliceblue;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.step-desc {
+  color: rgb(100, 100, 100);
+  font-size: 12px;
+}
+
+.run-btn {
+  background-color: aliceblue;
+  color: rgb(8, 8, 8);
+  border: none;
+  border-radius: 8px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 9px 20px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: opacity 0.2s;
+  flex-shrink: 0;
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: default;
+  }
+
+  &:hover:not(:disabled) {
+    background-color: rgb(200, 210, 220);
+  }
+}
+
+.progress-bar {
+  margin-top: 14px;
+  background-color: rgb(30, 30, 30);
+  border-radius: 6px;
+  height: 8px;
+  position: relative;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background-color: rgb(60, 120, 200);
+  border-radius: 6px;
+  transition: width 0.4s ease;
+}
+
+.progress-text {
+  position: absolute;
+  right: 0;
+  top: -18px;
+  font-size: 11px;
+  color: rgb(100, 100, 100);
+}
+
+.step-status {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+  min-height: 20px;
+}
+
+.badge {
+  font-size: 11px;
+  font-weight: 700;
+  border-radius: 4px;
+  padding: 2px 8px;
+
+  &.done  { background: rgba(30, 130, 60, 0.15);  color: rgb(60, 180, 90); }
+  &.error { background: rgba(160, 40, 40, 0.15);  color: rgb(220, 80, 80); }
+}
+
+.step-message {
+  color: rgb(120, 120, 120);
+  font-size: 11px;
+}

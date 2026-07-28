@@ -8,6 +8,7 @@ import { TopComponent } from './top/top.component';
 import { BrandDetailComponent } from './brand-detail/brand-detail.component';
 import { CompareComponent } from './compare/compare.component';
 import { QuizComponent } from './quiz/quiz.component';
+import { AdminComponent } from './admin/admin.component';
 
 export const routes: Routes = [
     { path: 'players', component: PlayerCardComponent },
@@ -18,6 +19,7 @@ export const routes: Routes = [
     { path: 'top', component: TopComponent },
     { path: 'compare', component: CompareComponent },
     { path: 'quiz', component: QuizComponent },
+    { path: 'admin', component: AdminComponent },
     { path: '', redirectTo: 'players', pathMatch: 'full' },
     { path: '**', component: PageNotFoundComponent },
 ];
