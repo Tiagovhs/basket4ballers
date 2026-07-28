@@ -2,10 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { forkJoin } from 'rxjs';
-import { SNEAKERS } from '../mock/mock-sneakers';
 import { Player } from '../models/player';
 import { PlayerAPI } from '../models/player-api';
-import { Sneaker } from '../models/sneaker';
 import { PlayerService } from '../services/player/player.service';
 import { playerApiToPlayer } from '../utils/player-mapper';
 
@@ -19,10 +17,16 @@ import { playerApiToPlayer } from '../utils/player-mapper';
 export class CompareComponent implements OnInit {
 
   players: PlayerAPI[] = [];
-  player1Id = '';
-  player2Id = '';
+
+  search1 = '';
+  search2 = '';
+  showDropdown1 = false;
+  showDropdown2 = false;
+
   player1: Player | undefined;
   player2: Player | undefined;
+  loading1 = false;
+  loading2 = false;
 
   constructor(private playerService: PlayerService) {}
 
@@ -32,30 +36,69 @@ export class CompareComponent implements OnInit {
     });
   }
 
-  onPlayer1Change(id: string) {
-    this.player1Id = id;
-    if (!id) { this.player1 = undefined; return; }
+  get filtered1(): PlayerAPI[] {
+    const q = this.search1.toLowerCase();
+    return this.players.filter(p =>
+      `${p.firstName} ${p.lastName}`.toLowerCase().includes(q)
+    ).slice(0, 8);
+  }
+
+  get filtered2(): PlayerAPI[] {
+    const q = this.search2.toLowerCase();
+    return this.players.filter(p =>
+      `${p.firstName} ${p.lastName}`.toLowerCase().includes(q)
+    ).slice(0, 8);
+  }
+
+  selectPlayer1(p: PlayerAPI) {
+    this.search1 = `${p.firstName} ${p.lastName}`;
+    this.showDropdown1 = false;
+    this.loading1 = true;
+    this.player1 = undefined;
     forkJoin([
-      this.playerService.getPlayer(+id),
-      this.playerService.getPlayerStats(+id)
-    ]).subscribe(([p, stats]) => {
-      this.player1 = playerApiToPlayer(p, stats);
+      this.playerService.getPlayer(+p.id),
+      this.playerService.getPlayerStats(+p.id)
+    ]).subscribe(([player, stats]) => {
+      this.player1 = playerApiToPlayer(player, stats);
+      this.loading1 = false;
     });
   }
 
-  onPlayer2Change(id: string) {
-    this.player2Id = id;
-    if (!id) { this.player2 = undefined; return; }
+  selectPlayer2(p: PlayerAPI) {
+    this.search2 = `${p.firstName} ${p.lastName}`;
+    this.showDropdown2 = false;
+    this.loading2 = true;
+    this.player2 = undefined;
     forkJoin([
-      this.playerService.getPlayer(+id),
-      this.playerService.getPlayerStats(+id)
-    ]).subscribe(([p, stats]) => {
-      this.player2 = playerApiToPlayer(p, stats);
+      this.playerService.getPlayer(+p.id),
+      this.playerService.getPlayerStats(+p.id)
+    ]).subscribe(([player, stats]) => {
+      this.player2 = playerApiToPlayer(player, stats);
+      this.loading2 = false;
     });
   }
 
-  getSneakers(player: Player): Sneaker[] {
-    return SNEAKERS.filter(s => player.sneakerIds.includes(s.id));
+  onSearch1Change() {
+    this.showDropdown1 = true;
+    this.player1 = undefined;
+  }
+
+  onSearch2Change() {
+    this.showDropdown2 = true;
+    this.player2 = undefined;
+  }
+
+  hideDropdown1() {
+    setTimeout(() => this.showDropdown1 = false, 150);
+  }
+
+  hideDropdown2() {
+    setTimeout(() => this.showDropdown2 = false, 150);
+  }
+
+  draftLabel(player: Player): string {
+    if (player.undrafted) return 'Non drafté';
+    return `#${player.draftPick} (${player.draftYear})`;
   }
 
   better(v1: number, v2: number): 'left' | 'right' | 'equal' {

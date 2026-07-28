@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Sneaker } from '../models/sneaker';
-import { SNEAKERS } from '../mock/mock-sneakers';
+import { SneakerAPI } from '../models/sneaker-api';
+import { SneakerService } from '../services/sneaker/sneaker.service';
 
 @Component({
   selector: 'app-sneakers',
@@ -11,14 +11,18 @@ import { SNEAKERS } from '../mock/mock-sneakers';
   templateUrl: './sneakers.component.html',
   styleUrl: './sneakers.component.scss',
 })
-export class SneakersComponent {
-  sneakers: Sneaker[] = SNEAKERS;
+export class SneakersComponent implements OnInit {
+  allSneakers: SneakerAPI[] = [];
+  loading = true;
 
   selectedBrand = '';
   selectedPriceRange = '';
   searchQuery = '';
 
-  brands = [...new Set(SNEAKERS.map(s => s.brand))].sort();
+  brands: string[] = [];
+
+  readonly PAGE_SIZE = 24;
+  currentPage = 1;
 
   priceRanges = [
     { label: 'Moins de 130€', min: 0, max: 130 },
@@ -27,14 +31,30 @@ export class SneakersComponent {
     { label: 'Plus de 200€', min: 200, max: Infinity },
   ];
 
-  get sneakerOfTheDay(): Sneaker {
-    const start = new Date(new Date().getFullYear(), 0, 0).getTime();
-    const dayOfYear = Math.floor((Date.now() - start) / 86400000);
-    return SNEAKERS[dayOfYear % SNEAKERS.length];
+  constructor(private sneakerService: SneakerService) {}
+
+  ngOnInit(): void {
+    this.sneakerService.getSneakers().subscribe({
+      next: (data) => {
+        this.allSneakers = data;
+        this.brands = [...new Set(data.map(s => s.brand))].sort();
+        this.loading = false;
+      },
+      error: () => {
+        this.loading = false;
+      }
+    });
   }
 
-  get filteredSneakers(): Sneaker[] {
-    let result = this.sneakers;
+  get sneakerOfTheDay(): SneakerAPI | null {
+    if (!this.allSneakers.length) return null;
+    const start = new Date(new Date().getFullYear(), 0, 0).getTime();
+    const dayOfYear = Math.floor((Date.now() - start) / 86400000);
+    return this.allSneakers[dayOfYear % this.allSneakers.length];
+  }
+
+  get filteredSneakers(): SneakerAPI[] {
+    let result = this.allSneakers;
 
     if (this.selectedBrand) {
       result = result.filter(s => s.brand === this.selectedBrand);
@@ -49,21 +69,56 @@ export class SneakersComponent {
 
     if (this.searchQuery) {
       const q = this.searchQuery.toLowerCase();
-      result = result.filter(s =>
-        s.name.toLowerCase().includes(q) || s.colorway.toLowerCase().includes(q)
-      );
+      result = result.filter(s => s.name.toLowerCase().includes(q));
     }
 
     return result;
+  }
+
+  get totalPages(): number {
+    return Math.ceil(this.filteredSneakers.length / this.PAGE_SIZE);
+  }
+
+  get paginatedSneakers(): SneakerAPI[] {
+    const start = (this.currentPage - 1) * this.PAGE_SIZE;
+    return this.filteredSneakers.slice(start, start + this.PAGE_SIZE);
+  }
+
+  get pages(): number[] {
+    const total = this.totalPages;
+    const current = this.currentPage;
+    const delta = 2;
+    const range: number[] = [];
+
+    const left = Math.max(1, current - delta);
+    const right = Math.min(total, current + delta);
+
+    for (let i = left; i <= right; i++) range.push(i);
+    if (left > 1) range.unshift(-1, 1);
+    if (right < total) range.push(-1, total);
+
+    return range;
   }
 
   get hasActiveFilters(): boolean {
     return !!(this.selectedBrand || this.selectedPriceRange || this.searchQuery);
   }
 
-  clearFilters() {
+  onFilterChange(): void {
+    this.currentPage = 1;
+  }
+
+  clearFilters(): void {
     this.selectedBrand = '';
     this.selectedPriceRange = '';
     this.searchQuery = '';
+    this.currentPage = 1;
+  }
+
+  goToPage(page: number): void {
+    if (page >= 1 && page <= this.totalPages) {
+      this.currentPage = page;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   }
 }

@@ -1,33 +1,65 @@
 <div class="page">
   <h1 class="title">Administration</h1>
-  <p class="subtitle">Initialisation de la base de données — suivre l'ordre ci-dessous.</p>
 
-  <div class="steps">
-    <div class="step" *ngFor="let step of steps" [ngClass]="step.status">
-      <div class="step-header">
-        <div class="step-info">
-          <span class="step-label">{{ step.label }}</span>
-          <span class="step-desc">{{ step.description }}</span>
+  <div class="section">
+    <h2 class="section-title">Joueurs</h2>
+    <p class="subtitle">Initialisation de la base de données — suivre l'ordre ci-dessous.</p>
+    <div class="steps">
+      <div class="step" *ngFor="let step of steps" [ngClass]="step.status">
+        <div class="step-header">
+          <div class="step-info">
+            <span class="step-label">{{ step.label }}</span>
+            <span class="step-desc">{{ step.description }}</span>
+          </div>
+          <button
+            class="run-btn"
+            [disabled]="step.status === 'running'"
+            (click)="run(step)">
+            <span *ngIf="step.status !== 'running'">Lancer</span>
+            <span *ngIf="step.status === 'running'">En cours...</span>
+          </button>
         </div>
-        <button
-          class="run-btn"
-          [disabled]="step.status === 'running'"
-          (click)="run(step)">
-          <span *ngIf="step.status !== 'running'">Lancer</span>
-          <span *ngIf="step.status === 'running'">En cours...</span>
-        </button>
-      </div>
 
-      <div class="progress-bar" *ngIf="step.percent !== undefined">
-        <div class="progress-fill" [style.width.%]="step.percent"></div>
-        <span class="progress-text">{{ step.percent }}%</span>
-      </div>
+        <div class="progress-bar" *ngIf="step.percent !== undefined">
+          <div class="progress-fill" [style.width.%]="step.percent"></div>
+          <span class="progress-text">{{ step.percent }}%</span>
+        </div>
 
-      <div class="step-status">
-        <span *ngIf="step.status === 'done'" class="badge done">✓ Terminé</span>
-        <span *ngIf="step.status === 'error'" class="badge error">✗ Erreur</span>
-        <span *ngIf="step.message" class="step-message">{{ step.message }}</span>
+        <div class="step-status">
+          <span *ngIf="step.status === 'done'" class="badge done">✓ Terminé</span>
+          <span *ngIf="step.status === 'error'" class="badge error">✗ Erreur</span>
+          <span *ngIf="step.message" class="step-message">{{ step.message }}</span>
+        </div>
       </div>
     </div>
   </div>
+
+  <div class="section">
+    <h2 class="section-title">Sneakers</h2>
+    <p class="subtitle">Scraping basket4ballers.com — les deux requêtes font un upsert, pas besoin de vider la base.</p>
+    <div class="steps">
+      <div class="step" *ngFor="let step of sneakerSteps" [ngClass]="step.status">
+        <div class="step-header">
+          <div class="step-info">
+            <span class="step-label">{{ step.label }}</span>
+            <span class="step-desc">{{ step.description }}</span>
+          </div>
+          <button
+            class="run-btn"
+            [disabled]="step.status === 'running'"
+            (click)="run(step)">
+            <span *ngIf="step.status !== 'running'">Lancer</span>
+            <span *ngIf="step.status === 'running'">En cours...</span>
+          </button>
+        </div>
+
+        <div class="step-status">
+          <span *ngIf="step.status === 'done'" class="badge done">✓ Terminé</span>
+          <span *ngIf="step.status === 'error'" class="badge error">✗ Erreur</span>
+          <span *ngIf="step.message" class="step-message">{{ step.message }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>

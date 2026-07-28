@@ -1,4 +1,8 @@
-<div class="page" *ngIf="currentPlayer; else notFound">
+<div class="loading-page" *ngIf="loading">
+  <div class="spinner"></div>
+</div>
+
+<div class="page" *ngIf="!loading && currentPlayer">
 
   <!-- HERO -->
   <div class="hero" [style.border-bottom-color]="currentPlayer.team.color">
@@ -110,11 +114,9 @@
 
 </div>
 
-<ng-template #notFound>
-  <div class="not-found-page">
-    <p class="not-found-emoji">🤷</p>
-    <h2 class="not-found-title">Joueur inconnu</h2>
-    <p class="not-found-sub">Ce joueur n'existe pas dans notre base.</p>
-    <button class="not-found-btn" (click)="returnToPlayers()">Retour aux joueurs</button>
-  </div>
-</ng-template>
+<div class="not-found-page" *ngIf="!loading && !currentPlayer">
+  <p class="not-found-emoji">🤷</p>
+  <h2 class="not-found-title">Joueur inconnu</h2>
+  <p class="not-found-sub">Ce joueur n'existe pas dans notre base.</p>
+  <button class="not-found-btn" (click)="returnToPlayers()">Retour aux joueurs</button>
+</div>

@@ -22,6 +22,7 @@ export class DetailsPalyerComponent implements OnInit {
   currentPlayer: Player | undefined;
   playerSneakers: Sneaker[] = [];
   timeline: SeasonEntry[] = [];
+  loading = true;
 
   constructor(
     private route: ActivatedRoute,
@@ -51,9 +52,11 @@ export class DetailsPalyerComponent implements OnInit {
         this.currentPlayer = playerApiToPlayer(playerApi, stats);
         this.playerSneakers = SNEAKERS.filter(s => this.currentPlayer!.sneakerIds.includes(s.id));
         this.timeline = TIMELINE[this.currentPlayer.id] ?? [];
+        this.loading = false;
       },
       error: () => {
         this.currentPlayer = undefined;
+        this.loading = false;
       }
     });
   }

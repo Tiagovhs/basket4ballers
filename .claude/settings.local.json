@@ -8,7 +8,9 @@
       "WebFetch(domain:www.stickpng.com)",
       "WebFetch(domain:commons.wikimedia.org)",
       "Bash(npx ng:*)",
-      "Bash(npm run:*)"
+      "Bash(npm run:*)",
+      "Bash(xargs grep:*)",
+      "Bash(curl -s \"http://localhost:8080/api/sneakers\")"
     ]
   }
 }

@@ -1,59 +1,95 @@
 <div class="page">
 
-  <!-- PAIRE DU JOUR -->
-  <div class="sotd-banner">
-    <div class="sotd-label-col">
-      <span class="sotd-badge">PAIRE DU JOUR</span>
-      <h2 class="sotd-name">{{ sneakerOfTheDay.name }}</h2>
-      <p class="sotd-colorway">{{ sneakerOfTheDay.colorway }}</p>
-      <p class="sotd-brand">{{ sneakerOfTheDay.brand }}</p>
-      <p class="sotd-price">{{ sneakerOfTheDay.price }} €</p>
-    </div>
-    <div class="sotd-img-col">
-      <img class="sotd-img" [src]="sneakerOfTheDay.img" [alt]="sneakerOfTheDay.name" />
-    </div>
+  <!-- LOADING -->
+  <div class="loading" *ngIf="loading">
+    <div class="spinner"></div>
+    <p>Chargement des sneakers...</p>
   </div>
 
-  <h1 class="section-title">Sneakers</h1>
+  <ng-container *ngIf="!loading">
 
-  <!-- FILTERS -->
-  <div class="filters-bar">
-    <input
-      class="search-input"
-      type="text"
-      placeholder="Rechercher une sneaker..."
-      [(ngModel)]="searchQuery"
-    />
-    <select class="filter-select" [(ngModel)]="selectedBrand">
-      <option value="">Toutes les marques</option>
-      <option *ngFor="let brand of brands" [value]="brand">{{ brand }}</option>
-    </select>
-    <select class="filter-select" [(ngModel)]="selectedPriceRange">
-      <option value="">Tous les prix</option>
-      <option *ngFor="let range of priceRanges" [value]="range.label">{{ range.label }}</option>
-    </select>
-    <button class="clear-btn" *ngIf="hasActiveFilters" (click)="clearFilters()">Effacer</button>
-  </div>
-
-  <p class="result-count" *ngIf="hasActiveFilters">
-    {{ filteredSneakers.length }} résultat{{ filteredSneakers.length !== 1 ? 's' : '' }}
-  </p>
-
-  <div class="grid" *ngIf="filteredSneakers.length > 0; else noResults">
-    <div *ngFor="let sneaker of filteredSneakers" class="card">
-      <div class="img-wrapper">
-        <img [src]="sneaker.img" [alt]="sneaker.name" />
+    <!-- PAIRE DU JOUR -->
+    <div class="sotd-banner" *ngIf="sneakerOfTheDay">
+      <div class="sotd-label-col">
+        <span class="sotd-badge">PAIRE DU JOUR</span>
+        <h2 class="sotd-name">{{ sneakerOfTheDay.name }}</h2>
+        <p class="sotd-brand">{{ sneakerOfTheDay.brand }}</p>
+        <p class="sotd-price">{{ sneakerOfTheDay.price | number:'1.2-2' }} €</p>
       </div>
-      <div class="info">
-        <span class="brand">{{ sneaker.brand }}</span>
-        <h3 class="name">{{ sneaker.name }}</h3>
-        <p class="colorway">{{ sneaker.colorway }}</p>
-        <p class="price">{{ sneaker.price }} €</p>
+      <div class="sotd-img-col">
+        <img class="sotd-img" [src]="sneakerOfTheDay.imageUrl" [alt]="sneakerOfTheDay.name" />
       </div>
     </div>
-  </div>
 
-  <ng-template #noResults>
-    <p class="no-results">Aucune sneaker trouvée.</p>
-  </ng-template>
+    <h1 class="section-title">Sneakers</h1>
+
+    <!-- FILTERS -->
+    <div class="filters-bar">
+      <input
+        class="search-input"
+        type="text"
+        placeholder="Rechercher une sneaker..."
+        [(ngModel)]="searchQuery"
+        (ngModelChange)="onFilterChange()"
+      />
+      <select class="filter-select" [(ngModel)]="selectedBrand" (ngModelChange)="onFilterChange()">
+        <option value="">Toutes les marques</option>
+        <option *ngFor="let brand of brands" [value]="brand">{{ brand }}</option>
+      </select>
+      <select class="filter-select" [(ngModel)]="selectedPriceRange" (ngModelChange)="onFilterChange()">
+        <option value="">Tous les prix</option>
+        <option *ngFor="let range of priceRanges" [value]="range.label">{{ range.label }}</option>
+      </select>
+      <button class="clear-btn" *ngIf="hasActiveFilters" (click)="clearFilters()">Effacer</button>
+    </div>
+
+    <p class="result-count">
+      {{ filteredSneakers.length }} sneaker{{ filteredSneakers.length !== 1 ? 's' : '' }}
+      <ng-container *ngIf="hasActiveFilters"> trouvée{{ filteredSneakers.length !== 1 ? 's' : '' }}</ng-container>
+    </p>
+
+    <!-- GRID -->
+    <div class="grid" *ngIf="paginatedSneakers.length > 0; else noResults">
+      <div *ngFor="let sneaker of paginatedSneakers" class="card">
+        <div class="img-wrapper">
+          <img [src]="sneaker.imageUrl" [alt]="sneaker.name" loading="lazy" />
+        </div>
+        <div class="info">
+          <span class="brand">{{ sneaker.brand }}</span>
+          <h3 class="name">{{ sneaker.name }}</h3>
+          <p class="price">{{ sneaker.price | number:'1.2-2' }} €</p>
+        </div>
+      </div>
+    </div>
+
+    <ng-template #noResults>
+      <p class="no-results">Aucune sneaker trouvée.</p>
+    </ng-template>
+
+    <!-- PAGINATION -->
+    <div class="pagination" *ngIf="totalPages > 1">
+      <button
+        class="page-btn"
+        [disabled]="currentPage === 1"
+        (click)="goToPage(currentPage - 1)"
+      >‹</button>
+
+      <ng-container *ngFor="let p of pages">
+        <span *ngIf="p === -1" class="page-ellipsis">…</span>
+        <button
+          *ngIf="p !== -1"
+          class="page-btn"
+          [class.active]="p === currentPage"
+          (click)="goToPage(p)"
+        >{{ p }}</button>
+      </ng-container>
+
+      <button
+        class="page-btn"
+        [disabled]="currentPage === totalPages"
+        (click)="goToPage(currentPage + 1)"
+      >›</button>
+    </div>
+
+  </ng-container>
 </div>

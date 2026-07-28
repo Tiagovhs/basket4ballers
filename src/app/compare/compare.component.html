@@ -2,18 +2,60 @@
   <h1 class="section-title">Comparateur</h1>
 
   <div class="selectors">
-    <select class="player-select" [ngModel]="player1Id" (ngModelChange)="onPlayer1Change($event)">
-      <option value="">— Joueur 1 —</option>
-      <option *ngFor="let p of players" [value]="p.id">{{ p.firstName }} {{ p.lastName }}</option>
-    </select>
+
+    <!-- Joueur 1 -->
+    <div class="search-wrapper">
+      <input
+        class="search-input"
+        type="text"
+        placeholder="Rechercher joueur 1..."
+        [(ngModel)]="search1"
+        (ngModelChange)="onSearch1Change()"
+        (focus)="showDropdown1 = true"
+        (blur)="hideDropdown1()"
+      />
+      <div class="dropdown" *ngIf="showDropdown1 && filtered1.length > 0">
+        <div
+          class="dropdown-item"
+          *ngFor="let p of filtered1"
+          (mousedown)="selectPlayer1(p)"
+        >
+          {{ p.firstName }} {{ p.lastName }}
+        </div>
+      </div>
+    </div>
+
     <span class="vs">VS</span>
-    <select class="player-select" [ngModel]="player2Id" (ngModelChange)="onPlayer2Change($event)">
-      <option value="">— Joueur 2 —</option>
-      <option *ngFor="let p of players" [value]="p.id">{{ p.firstName }} {{ p.lastName }}</option>
-    </select>
+
+    <!-- Joueur 2 -->
+    <div class="search-wrapper">
+      <input
+        class="search-input"
+        type="text"
+        placeholder="Rechercher joueur 2..."
+        [(ngModel)]="search2"
+        (ngModelChange)="onSearch2Change()"
+        (focus)="showDropdown2 = true"
+        (blur)="hideDropdown2()"
+      />
+      <div class="dropdown" *ngIf="showDropdown2 && filtered2.length > 0">
+        <div
+          class="dropdown-item"
+          *ngFor="let p of filtered2"
+          (mousedown)="selectPlayer2(p)"
+        >
+          {{ p.firstName }} {{ p.lastName }}
+        </div>
+      </div>
+    </div>
+
   </div>
 
-  <div class="comparison" *ngIf="player1 && player2">
+  <div class="loading-row" *ngIf="loading1 || loading2">
+    <div class="spinner"></div>
+  </div>
+
+  <div class="comparison" *ngIf="player1 && player2 && !loading1 && !loading2">
 
     <!-- Portraits -->
     <div class="portraits">
@@ -51,42 +93,15 @@
       </div>
 
       <div class="stat-row">
-        <div class="stat-val left">#{{ player1.draftPick }} ({{ player1.draftYear }})</div>
+        <div class="stat-val left">{{ draftLabel(player1) }}</div>
         <div class="stat-label">Draft</div>
-        <div class="stat-val right">#{{ player2.draftPick }} ({{ player2.draftYear }})</div>
-      </div>
-    </div>
-
-    <!-- Sneakers -->
-    <div class="sneakers-compare">
-      <div class="sneakers-col">
-        <h3 class="col-title">Ses paires</h3>
-        <div class="sneaker-mini" *ngFor="let s of getSneakers(player1)">
-          <img [src]="s.img" [alt]="s.name" />
-          <div>
-            <p class="sname">{{ s.name }}</p>
-            <p class="scolor">{{ s.colorway }}</p>
-            <p class="sprice">{{ s.price }} €</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="sneakers-col">
-        <h3 class="col-title">Ses paires</h3>
-        <div class="sneaker-mini" *ngFor="let s of getSneakers(player2)">
-          <img [src]="s.img" [alt]="s.name" />
-          <div>
-            <p class="sname">{{ s.name }}</p>
-            <p class="scolor">{{ s.colorway }}</p>
-            <p class="sprice">{{ s.price }} €</p>
-          </div>
-        </div>
+        <div class="stat-val right">{{ draftLabel(player2) }}</div>
       </div>
     </div>
 
   </div>
 
-  <p class="placeholder" *ngIf="!player1 || !player2">
-    Sélectionne deux joueurs pour comparer leurs stats et sneakers.
+  <p class="placeholder" *ngIf="!loading1 && !loading2 && (!player1 || !player2)">
+    Recherche deux joueurs pour comparer leurs stats.
   </p>
 </div>

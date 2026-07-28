@@ -11,7 +11,7 @@ interface ImportStatus {
   message?: string;
 }
 
-type StepId = 'reset' | 'import' | 'conferences' | 'stats';
+type StepId = 'reset' | 'import' | 'conferences' | 'stats' | 'sneakers-sync' | 'sneakers-images';
 
 interface Step {
   id: StepId;
@@ -73,6 +73,25 @@ export class AdminComponent implements OnDestroy {
       statusEndpoint: '/api/admin/stats/status',
       status: 'idle',
       percent: 0,
+    },
+  ];
+
+  sneakerSteps: Step[] = [
+    {
+      id: 'sneakers-sync',
+      label: '1. Scrape catalogue',
+      description: 'Récupère toutes les pages du catalogue (nom, marque, prix). ~30 secondes.',
+      method: 'POST',
+      endpoint: '/api/sneakers/sync?pages=30',
+      status: 'idle',
+    },
+    {
+      id: 'sneakers-images',
+      label: '2. Récupère les images',
+      description: 'Visite chaque page produit pour extraire les images. ~3-4 minutes.',
+      method: 'POST',
+      endpoint: '/api/sneakers/sync-images',
+      status: 'idle',
     },
   ];
 
