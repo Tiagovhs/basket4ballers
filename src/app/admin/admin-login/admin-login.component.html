@@ -1,0 +1,53 @@
+<div class="login-page">
+  <div class="login-card">
+    <div class="lock-icon">&#128274;</div>
+    <h1 class="title">Administration</h1>
+    <p class="subtitle">Accès restreint &mdash; authentification requise</p>
+
+    <form class="form" (ngSubmit)="submit()">
+      <div class="field">
+        <label class="label">Mot de passe</label>
+        <input
+          class="input"
+          type="password"
+          [(ngModel)]="password"
+          name="password"
+          (input)="onPasswordChange()"
+          placeholder="••••••••"
+          autocomplete="current-password"
+        />
+      </div>
+
+      <div class="policy" *ngIf="showPolicy">
+        <p class="policy-title">Politique de mot de passe</p>
+        <ul class="policy-list">
+          <li [class.ok]="policy.minLength">
+            <span class="dot"></span> 8 caractères minimum
+          </li>
+          <li [class.ok]="policy.hasUppercase">
+            <span class="dot"></span> Une majuscule
+          </li>
+          <li [class.ok]="policy.hasLowercase">
+            <span class="dot"></span> Une minuscule
+          </li>
+          <li [class.ok]="policy.hasDigit">
+            <span class="dot"></span> Un chiffre
+          </li>
+          <li [class.ok]="policy.hasSpecial">
+            <span class="dot"></span> Un caractère spécial (!&#64;#$%...)
+          </li>
+        </ul>
+      </div>
+
+      <p class="error" *ngIf="error">{{ error }}</p>
+
+      <button class="submit-btn" type="submit" [disabled]="loading">
+        {{ loading ? 'Connexion...' : 'Se connecter' }}
+      </button>
+    </form>
+
+    <p class="register-link">
+      Pas encore de compte ? <a routerLink="/admin/register">Créer un compte admin</a>
+    </p>
+  </div>
+</div>
